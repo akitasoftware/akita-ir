@@ -150,11 +150,40 @@ message HTTPHeader {
 
 message HTTPAuth {
   enum HTTPAuthType {
+    //
+    // Standard types (IETF/IANA)
+    // https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml
+    //
     UNKNOWN = 0;
     BASIC = 1;
     BEARER = 2;
+    DIGEST = 3; 
+    MUTUAL = 4;
+    OAUTH = 5;
+    VAPID = 6;
+    SCRAM_SHA_1 = 7;
+    SCRAM_SHA_256 = 8;
+    NEGOTIATE = 9;
+    HOBA = 10;
+
+    // An application-specific authorization header, such as
+    // Github webhook's X-Hub-Signature-256 or X-Hub-Signature,
+    // *not* carried in "Authorization".
+    PROPRIETARY_HEADER = 11;
+
+    // 
+    // Non-IETF types in Authorization header
+    //
+    
+    // AWS request signing
+    AWS4_HMAC_SHA256 = 12;
+    
+    // NTLM-over-HTTP
+    // https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-ntht/f09cf6e1-529e-403b-a8a5-7368ee096a6a
+    NTLM = 13;  
   }
   HTTPAuthType type = 1;
+  string proprietary_header = 2;
 }
 
 message HTTPCookie {
